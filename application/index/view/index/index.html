@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=pAEsILpsDG9Pq1WSQQZ3vqF03YLIwW0G"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+</head>
+<body style="background-color: #eef3fa;">
+<div id="headSection">
+    <div id="topBar">
+        <div class="container_24">
+            <div class="grid_10 left"><a class="city" href="https://www.tuhu.cn/City.aspx"><i></i>北京</a><a class="shop" href="https://www.tuhu.cn/shops.aspx">全国<b>405</b>城市已覆盖，<b>13000</b>家门店包安装</a></div>
+            <div class="grid_11 right">
+                <span id="dvWlTop"><span><a rel="external nofollow" class="pleaseloginin red" href="#">请登录</a> | <a rel="external nofollow" class="link-regist" href="#">免费注册</a></span></span> | <a rel="external nofollow" class="link-mycount">用户中心</a> | <a rel="external nofollow" target="_blank" href="https://www.tuhu.cn/checkout/MyShoppingCartNew.aspx">购物车（<span id="MyCartQuantity" class="red">0</span>）</a>
+                | <a href="https://www.tuhu.cn/Enterprises.aspx" rel="external nofollow" target="_blank" class="enterprises"><i class="i-enterprises"></i>企业客户</a> | <a href="https://www.tuhu.cn/Stores.aspx" rel="external nofollow" target="_blank">店铺加盟</a>| <a id="factoryStore" rel="external nofollow" target="_blank">工场店加盟 </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="midBar">
+        <div class="container_24">
+            <div class="grid_4">
+                <a href="http://www.tuhu.cn/" class="tuhulogo"><img src="https://img2.tuhu.org/Home/Image/FjEIp5II-GFb-iTS4wJ-SEqTDQNO_w173_h52.png@100Q.png"></a>
+            </div>
+            <div class="grid_8">
+                <div id="myCar">
+                    <div class="iconNew">
+                    </div>
+                    <div class="tCar">
+                        <!--我的爱车<a class="downArrow" href="#"> </a>
+                        <br />--><span>请选择车型,精准匹配爱车服务 <a href="https://item.tuhu.cn/Tires.html" class="i-add">+</a></span>
+                    </div>
+                </div>
+                <div class="myCar_style" style="display:none;">
+                    <div id="loginUserVehicleList">
+                        <div class="car_stylelist">
+                            <div class="carIcon_border clearfix">
+                                <div class="carIcon" style="background: url(https://img4.tuhu.org/Images/Logo/BieKe.png) no-repeat; background-size: cover;"></div>
+                            </div>
+                            <div class="style_content">
+                                <div class="style_center">
+                                    马自达 昂克塞拉 2.0T 2014年生产
+                                    <div class="style_list">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add_carstyle">
+                        <a href=""><i class="add_icon"></i>添加新车型</a>
+                    </div>
+                    <div class="go_Carstyle">
+                        <span>管理我的车型库&gt;</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="service_highlight"><ul><li><i class="i-zp"></i>正品直供</li><li><i class="i-zhf"></i>全国低价</li><li><i class="i-sds"></i>快速送达</li><li><i class="i-tools"></i>就近安装</li></ul>
+            </div>
+            <div class="i_searchArea grid_4">
+                <form action="https://item.tuhu.cn/Search.html" method="get">
+                    <input class="txt" type="text" value="" name="s" autocomplete="off">
+                    <div class="btn"><span class="iconNew btnIcon"></span></div>
+                </form>
+                <ul></ul>
+            </div>
+        </div>
+    </div>
+    <div id="naviBar">
+        <div class="container_24 nav ">
+            <div id="itemNavi" class="clearfix"><a href="https://www.tuhu.cn">首页</a><a href="https://item.tuhu.cn/Tires.html">轮胎</a><a href="https://by.tuhu.cn/baoyang/">保养</a><a href="https://www.tuhu.cn/spages/Battery/">电瓶上门</a><a href="https://www.tuhu.cn/ChePin/">车品</a><a href="https://item.tuhu.cn/hub.html">轮毂</a><a class="current" href="https://www.tuhu.cn/shops/">服务门店</a><a href="https://www.tuhu.cn/Community/" target="_blank">文章</a><a hrefsource="https://www.tuhu.cn/PenQi/Index.aspx" id="penqi" href="https://www.tuhu.cn/PenQi/Index.aspx">喷漆</a><a href="https://www.tuhu.cn/App" target="_blank" class="fivefen"></a></div>
+            <div class="grid_5 " style="float:right">
+                <div class="Naviservice"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="con">
+    <div class="site-map"><a class="astyle" href="https://www.tuhu.cn">首页</a> &gt; 服务门店</div>
+    <div class="left">
+        <ul>
+            <li><a href="javascript:;" id="city_select">
+                <span id="cityName">{$field_city.name}</span>
+                <img class="img" src="/static/img/向下箭头.png" alt="up">
+                <!--省级联动-->
+            </a></li>
+            <li><a href="javascript:;" id="city_type">
+                <span>所有类型</span>
+                <img class="img1" src="/static/img/向下箭头.png" alt="up">
+            </a></li>
+            <li><a href="javascript:;" id="city_sort">
+                <span>综合排序</span>
+                <img class="img2" src="/static/img/向下箭头.png" alt="down">
+            </a></li>
+        </ul>
+        <ul class="city">
+            <li id="city_select_list">
+                <!--省级联动-->
+                <div class="citys">
+                    <div class="city_title">
+                        <span class="active1 one">{$field_city.name}</span><span> > </span><span class="two" onmouseover="getCounty('{$field_city.id}',this,2)" data-id="{$field_county.id}">{if condition="$field_county.type == 2"}{$field_county.name}{else}所有{/if}</span>
+                    </div>
+                    <div class="citys_con">
+                        <div class="citys_s">
+                            {foreach $citys as $c}
+                                <a href="javascript:;" {if condition="$field_city.id == $c.id"}class="active"{/if} onclick="getCounty('{$c.id}',this)">{$c.name}</a>
+                            {/foreach}
+                        </div>
+                        <div class="citys_q">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li id="city_type_list">
+                <!--所有类型-->
+                <div class="style">
+                    <a class="active" href="#">所有类型</a>
+                    <a href="#">维修厂</a>
+                    <a href="#">4s店</a>
+                    <a href="#">快修店</a>
+                    <a href="#">途虎工场店</a>
+                    <a href="#">星级保修店</a>
+                    <a href="#">途虎技术</a>
+                </div>
+            </li>
+            <li id="city_sort_list">
+                <!--综合排序-->
+                <div class="pai">
+                    <a class="active" href="#">综合排序</a>
+                    <a href="#">满意度</a>
+                    <a href="#">累计安装</a>
+                </div>
+            </li>
+        </ul>
+        <p>
+            <span>登录</span>
+            <span>后查看您曾经去过的门店</span>
+        </p>
+        <ul>
+            {foreach $field_list as $l}
+            <li><a href="#">
+                <div class="con_title">
+                    <h3>{$l.name}</h3>
+                    <div class="icon">
+                        <span>{$l.grade}级</span>
+                        <span>虎</span>
+                        <span>车</span>
+                        <span>星</span>
+                        <span>{:mb_substr($l.cate_name,0,1)}</span>
+                    </div>
+                </div>
+                <div class="con_con">
+                    <img src="{$l.pics}" alt="{$l.name}">
+                    <div class="con_c">
+                        <p><span>共安装<span style="color: #f4825b">{$l.install_amount}</span>单</span><span>评价{:number_format($l.grade,2,'.','')}</span></p>
+                        <p><span>门店地址：</span><span>{$l.address}</span></p>
+                        <p><span>支付方式:</span>
+                            {if condition="$l.pay_type == 0"}
+                                <img src="/static/img/支.png" alt=""><img src="/static/img/刷卡.png" alt="">
+                            {else}
+                                {if condition="$l.pat_type == 1"}
+                                    <img src="/static/img/支.png" alt="">
+                                {else}
+                                    <img src="/static/img/刷卡.png" alt="">
+                                {/if}
+                            {/if}
+                        </p>
+                    </div>
+                </div>
+            </a></li>
+            {/foreach}
+        </ul>
+    </div>
+    <div class="right">
+        <div class="right_title">
+            <div class="ser">
+                <span>门店名称</span>
+                <input id="suggestId" type="text" placeholder="请输入门店名称" autofocus>
+                <a href="#" onclick="searchBymPoint();">定位</a>
+            </div>
+        </div>
+        <div class="right_map">
+            <div id="container"></div>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+    <div class="FL_tit">
+
+        <span class="tit">友情链接：</span><a href="http://www.qipeilong.cn/" target="_blank"><span class="lbl">汽配龙</span></a><a href="http://www.ftwheels.cn/" target="_blank"><span class="lbl">丰途轮毂</span></a><a href="http://auto.qq.com/" target="_blank"><span class="lbl">腾讯汽车</span></a><a href="http://db.auto.sina.com.cn" target="_blank"><span class="lbl">新浪汽车</span></a><a href="http://auto.163.com/" target="_blank"><span class="lbl">网易汽车</span></a><a href="http://auto.sohu.com/" target="_blank"><span class="lbl">搜狐汽车</span></a><a href="http://beijing.bitauto.com/" target="_blank"><span class="lbl">易车网</span></a><a href="http://www.xcar.com.cn/" target="_blank"><span class="lbl">爱卡汽车</span></a><a href="http://www.pcauto.com.cn/ " target="_blank"><span class="lbl">太平洋汽车网</span></a><a href="http://www.baixing.com" target="_blank"><span class="lbl">百姓网</span></a><a href="http://www.hupu.com/" target="_blank"><span class="lbl">虎扑网</span></a><a href="http://auto.tom.com" target="_blank"><span class="lbl">TOM汽车</span></a><a href="http://www.gaotie.cn/dingpiao/" target="_blank"><span class="lbl">铁路网上订票官网</span></a><a href="http://shanghai.liebiao.com/shenghuo/" target="_blank"><span class="lbl">上海生活服务</span></a><a href="http://yueye.xout.cn" target="_blank"><span class="lbl">极限户外-自驾越野</span></a><a href="http://db.auto.sina.com.cn/photo/" target="_blank"><span class="lbl">汽车图片</span></a><a href="http://www.xin.com/quanguo/" target="_blank"><span class="lbl">二手车交易</span></a><a href="http://www.58che.com/5838/" target="_blank"><span class="lbl">奥迪Q2</span></a><a href="https://test.smzdm.com/" target="_blank"><span class="lbl">消费众测</span></a></div>
+    <div id="copyright" style="text-align:center;">
+        © 2007-2019 Tuhu.cn Corporation, All Rights Reserved 上海阑途信息技术有限公司 版权所有
+        <a target="_blank" rel="external nofollow" href="http://www.beian.miit.gov.cn/" class="icp">沪ICP备11004912号-2 <img src="https://img2.tuhu.org/home/Image/cn_icp.gif" style="vertical-align: middle"></a>
+    </div>
+    <div style="text-align:center;" id="icbc">
+        <a target="_blank" rel="external nofollow" href="http://218.242.124.22:8081/businessCheck/verifKey.do?showType=extShow&amp;serial=9031000020160809104143000001124532-SAIC_SHOW_310000-20161124214123696913&amp;signData=MEUCIGO4awoy6Ckler42exW0cPiUL6Mvtm8L7hf8cwvmBlnYAiEAvaAH6KjFoY0gOiYI3ML+TAQ/rUju3RgYkgzL3JHiSlM=" style=""><img src="https://img2.tuhu.org/home/Image/shgs.gif"></a><a target="_blank" rel="external nofollow" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011202001045" style="margin:0 30px;"><!--<img src="http://www.beian.gov.cn/file/ghs.png">--><span>沪公网安备 31011202001045号</span></a><a href="http://shwg.dianping.com/index.html" target="_blank" rel="external nofollow"><img style="vertical-align:bottom" src="https://img2.tuhu.org/home/Image/goverment.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script type="text/javascript">
+    function search_list(){
+        $('.left>ul:first-child>li:first-child').click(function () {
+            // alert('111')
+            if ($('.city>li:first-child').is(':hidden')){
+                $('.city').show()
+                $('.city>li:first-child').show().siblings().hide()
+                $('.img').attr('src','/static/img/向上箭头.png')
+            } else {
+                $('.city>li:first-child').hide()
+                $('.img').attr('src','/static/img/向下箭头.png')
+                $('.city').hide()
+            }
+            $('.img1').attr('src','/static/img/向下箭头.png')
+            $('.img2').attr('src','/static/img/向下箭头.png')
+        })
+        $('.left>ul:first-child>li:nth-child(2)').click(function () {
+            if ($('.city>li:nth-child(2)').is(':hidden')){
+                $('.city').show()
+                $('.city>li:nth-child(2)').show().siblings().hide()
+                $('.img1').attr('src','/static/img/向上箭头.png')
+            } else {
+                $('.city>li:nth-child(2)').hide()
+                $('.img1').attr('src','/static/img/向下箭头.png')
+                $('.city').hide()
+            }
+            $('.img').attr('src','/static/img/向下箭头.png')
+            $('.img2').attr('src','/static/img/向下箭头.png')
+
+        })
+        $('.left>ul:first-child>li:nth-child(3)').click(function () {
+            // alert('333')
+            if ($('.city>li:nth-child(3)').is(':hidden')){
+                $('.city').show()
+                $('.city>li:nth-child(3)').show().siblings().hide()
+                $('.img2').attr('src','/static/img/向上箭头.png')
+            } else {
+                $('.city>li:nth-child(3)').hide()
+                $('.img2').attr('src','/static/img/向下箭头.png')
+                $('.city').hide()
+            }
+            $('.img1').attr('src','/static/img/向下箭头.png')
+            $('.img').attr('src','/static/img/向下箭头.png')
+
+        })
+        $('.one').mouseenter(function () {
+            $('.citys_s').show().siblings().hide();
+            $('.two').removeClass('active1');
+            $('.one').addClass('active1');
+            $('.one').css({
+                color:'#333333'
+            });
+            $('.two').css({
+                color:'#8a8a8a'
+            });
+        })
+        $('.two').mouseenter(function () {
+            $('.citys_q').show().siblings().hide()
+            $('.one').removeClass('active1')
+            $('.two').addClass('active1')
+            $('.one').css({
+                color:'#8a8a8a'
+            })
+            $('.two').css({
+                color:'#333333'
+            })
+        })
+    }
+
+    search_list();
+
+    //一级城市切换到二级
+    function getCounty(pid,obj,type=1) {
+        var county_id = $(obj).attr('data-id');
+        var county_text = $(obj).text();
+        $.post("{:url('index/citysAjax')}",{pid:pid},function (res) {
+            var data = res.data;
+            if(county_text == '所有'){
+                var str = '<a href="/index/index/index/cityid/'+pid+'.html" class="active" onclick="getCountyText(this)">所有</a>';
+            }else{
+                var str = '<a href="/index/index/index/cityid/'+pid+'.html" onclick="getCountyText(this)">所有</a>';
+            }
+            $.each(data,function (index,val) {
+                if (typeof (county_id) !== 'undefined'){
+                    if (val.id == county_id) {
+                        str += '<a href="/index/index/index/cityid/' + val.id + '.html" class="active" onclick="getCountyText(this)">' + val.name + '</a>';
+                    }else{
+                        str += '<a href="/index/index/index/cityid/'+val.id+'.html" onclick="getCountyText(this)">'+val.name+'</a>';
+                    }
+                }else{
+                    str += '<a href="/index/index/index/cityid/'+val.id+'.html" onclick="getCountyText(this)">'+val.name+'</a>';
+                }
+
+            })
+            $('.citys_q').html(str);
+            $('.citys_s').hide();
+            $('.citys_q').show();
+            if (type ==1) {
+                $('.one').html($(obj).text());
+            }
+            $('.one').removeClass('active1');
+            $('.two').addClass('active1');
+        })
+    }
+
+    function getCountyText(obj) {
+        var county_text = $(obj).text();
+        $('.two').html(county_text);
+    }
+
+    function markers(map,data) {
+        var markers = [];
+        var pt = null;
+        for (var i = 0;i<data.length;i++){
+            pt = new BMap.Point(data[i]['longitude'], data[i]['latitude']);
+            var marker = new BMap.Marker(pt);
+            markers.push(marker);
+        }
+        //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+        var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+    }
+    
+    function map_click(map) {
+        map.addEventListener("click",function(e){
+            $.post("{:url('index/clickAjax')}",{longitude:e.point.lng,latitude:e.point.lat},function (res) {
+                var data = res.data;
+                if (data !== ''){
+                    var point = new BMap.Point(data.longitude,data.latitude);
+                    var marker = new BMap.Marker(point);
+                    var sContent =
+                        '<div class="shopop-title">' +
+                        '<a href="/shop/beijing2/23822.aspx" target="_blank">'+data.name+'</a>' +
+                        '<div class="shop-level">' +
+                        '<span title="门店等级">'+data.grade+'级</span>' +
+                        '<i style="width:'+data.grade*20+'%"></i>' +
+                        '</div>' +
+                        '<span class="i-shop shop-xiu"></span>' +
+                        '</div>'+
+                        '<div class="shopop-content">' +
+                        '<div class="clearfix">' +
+                        '<a target="_blank" class="img" href="#">' +
+                        '<img src="'+data.pics+'" style="width: 100%;">' +
+                        '</a>' +
+                        '<div class="info">' +
+                        '<p><span>营业时间：</span>08:00-18:00</p>' +
+                        '<p><span>支付方式：<i class="i-alipay i-shop">支付宝</i></span></p>' +
+                        '<p><span>服务支持：<i class="i-shop i-zs">途虎直送</i></span></p>' +
+                        '<p><span>门店地址：</span><span class="address">'+data.address+'</span></p>' +
+                        '<div class="btn">' +
+                        '<a href="#">在线咨询</a>' +
+                        '<a href="#">线下体验</a>' +
+                        '</div>' +
+                        '</div></div></div>'
+                        ;
+
+                    var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+                    map.centerAndZoom(point);
+                    map.addOverlay(marker);
+                    marker.openInfoWindow(infoWindow);
+                }
+            })
+        });
+    }
+
+    function maps() {
+        // 百度地图API功能
+        var map = new BMap.Map("container");
+        var point = new BMap.Point("{$field_county.longitude}", "{$field_county.latitude}");
+        map.centerAndZoom(point, 10);
+        map.enableScrollWheelZoom(true);
+
+        map_click(map);
+
+        $.post("{:url('index/chartAjax')}",{city:"{$field_county.id}",type:"{$field_county.type}"},function (res) {
+            var mark_data = res.data;
+            markers(map,mark_data);
+        });
+    }
+    maps();
+
+</script>
+</body>
+</html>

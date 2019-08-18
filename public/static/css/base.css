@@ -1,0 +1,386 @@
+*{
+    font-size: 12px;
+}
+#container{
+    width: 100%;
+    height: 100%;
+}
+.active{
+    color: #ff5500;
+}
+.shopop-title {
+    margin-bottom: 12px;
+    line-height: 18px;
+    font-size: 12px;
+}
+.shopop-title a {
+    font-size: 14px;
+    font-weight: 700;
+    color: #04539c;
+    margin-right: 5px;
+    font-family: "Microsoft YaHei";
+}
+.shop-level span {
+    position: relative;
+    z-index: 5;
+}
+.shop-level i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #f4825b;
+}
+.shopop-title .shop-level {
+    float: none;
+    display: inline-block;
+    vertical-align: top;
+}
+.shop-level {
+    float: left;
+    width: 35px;
+    height: 18px;
+    color: #fff;
+    text-align: center;
+    line-height: 18px;
+    margin-right: 5px;
+    position: relative;
+    background-color: #cbcbcb;
+}
+.shopop-content{
+    width: 510px;
+}
+.shopop-content .img {
+    float: left;
+    margin-right: 15px;
+    border: 1px solid #ddd;
+    width: 100px;
+    height: 100px;
+}
+.shopop-content .info {
+    float: left;
+    width: 363px;
+}
+.shopop-content .info p {
+    margin-bottom: 8px;
+    line-height: 18px;
+    color: #333;
+    font-size: 12px;
+}
+.shopop-content .info .i-shop {
+    font-size: 0;
+    float: none;
+    vertical-align: top;
+}
+.shopop-content .btn {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+.shopop-content .btn a {
+    display: inline-block;
+    padding: 0 30px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #d12a3e;
+    font-family: "Microsoft YaHei";
+    height: 34px;
+    line-height: 34px;
+    margin-right: 10px;
+}
+.i-shop.i-alipay {
+    background-position: 0 0;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+.i-shop {
+    background-image: url(/static/img/支.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+.i-shop.shop-xiu {
+    background-position: -70px 0;
+}
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix:before, .clearfix:after {
+    content: '\20';
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+#headSection #topBar {
+    line-height: 36px;
+    height: 36px;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    color: #666;
+}
+#headSection #topBar .left {
+    float: left;
+    margin: 0;
+}
+
+#headSection #topBar .city {
+    line-height: 14px;
+    margin-right: 20px;
+}
+#headSection #topBar a {
+    color: #666;
+}
+.shop {
+    width: 1180px;
+    margin: 0 auto;
+}
+#headSection #topBar .right {
+    float: right;
+    text-align: right;
+    margin: 0;
+}
+
+#headSection #midBar {
+    height: 78px;
+    position: relative;
+    background-color: #fff;
+}
+#headSection .container_24 {
+    position: relative;
+    width: 1180px;
+}
+.container_24 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+#headSection #midBar .grid_4 {
+    margin-left: 0;
+    margin-right: 0;
+}
+#headSection #midBar .grid_4, #headSection #midBar .grid_8 {
+    float: left;
+}
+#headSection #midBar a {
+    color: #bd2639;
+}
+#headSection .tuhulogo {
+    display: block;
+    margin-top: 13px;
+    overflow: hidden;
+}
+#headSection #midBar .grid_4, #headSection #midBar .grid_8 {
+    float: left;
+}
+#headSection .grid_8 {
+    padding: 5px 0 5px 30px;
+    margin: 16px 0 0 20px;
+    border-left: 1px solid #ddd;
+    width: auto;
+}
+#headSection #myCar {
+    font-size: 14px;
+    position: relative;
+    padding: 0 10px;
+    height: 40px;
+    display: inline-block;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    cursor: pointer;
+}
+#headSection #myCar .iconNew {
+    background-position: -101px -148px;
+    width: 22px;
+    height: 22px;
+    margin-top: 11px;
+    float: left;
+}
+#headSection #myCar .tCar {
+    display: inline-block;
+    color: #333;
+    margin-left: 5px;
+    *margin-left: 40px;
+    font-size: 12px;
+    line-height: 40px;
+}
+.myCar_style {
+    position: absolute;
+    width: 390px;
+    height: 390px;
+    font-family: 微软雅黑;
+    background-color: rgb(255, 255, 255);
+    z-index: 1000;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(221, 221, 221);
+    border-image: initial;
+}
+.myCar_style>div:first-child {
+    margin: 15px;
+    height: 296px;
+    width: 360px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.add_carstyle {
+    width: 358px;
+    border: 1px solid #f4825b;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#headSection .service_highlight {
+    position: absolute;
+    top: 19px;
+    right: 248px;
+}
+.go_Carstyle {
+    margin: 10px 15px;
+    text-align: right;
+    font-size: 12px;
+    line-height: 12px;
+    color: #999;
+}
+#headSection .service_highlight ul li {
+    float: left;
+    margin-left: 10px;
+    color: rgb(102, 102, 102);
+    font-family: 宋体;
+}
+#headSection #midBar .i_searchArea {
+    position: absolute;
+    width: 218px;
+    height: 31px;
+    border: 2px solid #d12a3e;
+    top: 22px;
+    right: 0;
+    margin: 0;
+}
+#headSection #midBar .i_searchArea .txt {
+    float: left;
+    width: 180px;
+    height: 31px;
+    line-height: 31px;
+    border: none;
+    padding: 0 0 0 10px;
+    outline: none;
+}
+#headSection #midBar .i_searchArea .btn {
+    cursor: pointer;
+    text-align: center;
+    background-color: #d12a3e;
+    height: 31px;
+    line-height: 34px;
+    width: 28px;
+    border: none;
+    float: right;
+}
+#headSection #midBar .i_searchArea .btnIcon {
+    top: 0;
+    left: 0;
+    position: relative;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-position: -69px -90px;
+    background-color: #d12a3e;
+}
+
+#headSection #naviBar {
+    width: 100%!important;
+}
+
+#headSection #naviBar {
+    background-color: #d12a3e;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    width: 100%;
+}
+
+#headSection #naviBar .nav {
+    width: 1180px;
+}
+#headSection .container_24 {
+    position: relative;
+    width: 1180px;
+}
+
+.container_24 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+#headSection #itemNavi {
+    float: left;
+    width: 930px;
+    text-align: center;
+    font-weight: bold;
+    top: 0;
+    position: absolute;
+}
+#headSection #itemNavi a {
+    position: relative;
+    float: left;
+    padding: 0 18px;
+    color: #fff;
+    font-size: 16px;
+}
+#headSection #naviBar .grid_5 {
+    margin-left: 0;
+    margin-right: 0;
+}
+#headSection .Naviservice {
+    width: 230px;
+    height: 40px;
+    background-position: 0 -297px;
+}
+
+.site-map {
+    height: 45px;
+    line-height: 45px;
+    font-size: 12px;
+}
+
+#footer {
+    overflow: hidden;
+    background-color: #f5f5f5;
+    color: #999;
+    line-height: 1.8;
+    clear: both;
+    font-size: 12px;
+    position: relative;
+    text-align: center;
+    padding: 30px 0 15px;
+}
+
+.FL_tit {
+    font-weight: bold;
+    display: block;
+    font-size: 14px;
+    color: #999;
+    width: 1050px;
+    text-align: left;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 60px;
+}
+
+#footer .icp {
+    color: #333;
+    margin-left: 10px;
+}
+.FL_tit .tit {
+    position: absolute;
+    left: 0;
+}
+
+.lbl {
+    font-weight: normal;
+    color: #999;
+    font-size: 12px;
+    display: inline-block;
+    margin: 0 12px;
+    text-align: left;
+}
