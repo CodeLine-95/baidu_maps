@@ -145,7 +145,7 @@
         </p>
         <ul>
             {foreach $field_list as $l}
-            <li><a href="#">
+            <li><a href="javascript:;" onclick="lw_show(this)" data-title="{$l.name}" data-lon="{$l.longitude}" data-lat="{$l.latitude}" data-grade="{$l.grade}" data-pics="{$l.pics}" data-address="{$l.address}">
                 <div class="con_title">
                     <h3>{$l.name}</h3>
                     <div class="icon">
@@ -183,7 +183,7 @@
             <div class="ser">
                 <span>门店名称</span>
                 <input id="suggestId" type="text" placeholder="请输入门店名称" autofocus>
-                <a href="#" onclick="searchBymPoint();">定位</a>
+                <a href="javascript:;" onclick="searchBymPoint();">定位</a>
             </div>
         </div>
         <div class="right_map">
@@ -207,7 +207,54 @@
 </div>
 <script src="/static/js/jquery.js"></script>
 <script type="text/javascript">
+    function lw_show(obj) {
+        var title = $(obj).attr('data-title');
+        var lon = $(obj).attr('data-lon');
+        var lat = $(obj).attr('data-lat');
+        var grade = $(obj).attr('data-grade');
+        var pics = $(obj).attr('data-pics');
+        var address = $(obj).attr('data-address');
+
+        var sContent =
+            '<div class="shopop-title">' +
+            '<a href="/shop/beijing2/23822.aspx" target="_blank">'+title+'</a>' +
+            '<div class="shop-level">' +
+            '<span title="门店等级">'+grade+'级</span>' +
+            '<i style="width:'+grade*20+'%"></i>' +
+            '</div>' +
+            '<span class="i-shop shop-xiu"></span>' +
+            '</div>'+
+            '<div class="shopop-content">' +
+            '<div class="clearfix">' +
+            '<a target="_blank" class="img" href="#">' +
+            '<img src="'+pics+'" style="width: 100%;">' +
+            '</a>' +
+            '<div class="info">' +
+            '<p><span>营业时间：</span>08:00-18:00</p>' +
+            '<p><span>支付方式：<i class="i-alipay i-shop">支付宝</i></span></p>' +
+            '<p><span>服务支持：<i class="i-shop i-zs">途虎直送</i></span></p>' +
+            '<p><span>门店地址：</span><span class="address">'+address+'</span></p>' +
+            '<div class="btn">' +
+            '<a href="#">在线咨询</a>' +
+            '<a href="#">线下体验</a>' +
+            '</div>' +
+            '</div></div></div>'
+        ;
+        // 百度地图API功能
+        var map = new BMap.Map("container");
+        // var point = new BMap.Point("{$field_county.longitude}", "{$field_county.latitude}");
+        var point = new BMap.Point(lon,lat);
+        map.centerAndZoom(point, 15);
+        map.enableScrollWheelZoom(true);
+        var marker = new BMap.Marker(point);
+        var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+        map.centerAndZoom(point);
+        map.addOverlay(marker);
+        marker.openInfoWindow(infoWindow);
+    }
+
     function search_list(){
+
         $('.left>ul:first-child>li:first-child').click(function () {
             // alert('111')
             if ($('.city>li:first-child').is(':hidden')){
@@ -318,73 +365,90 @@
 
     function markers(map,data) {
         var markers = [];
-        var pt = null;
-        for (var i = 0;i<data.length;i++){
-            pt = new BMap.Point(data[i]['longitude'], data[i]['latitude']);
-            var marker = new BMap.Marker(pt);
-            markers.push(marker);
-        }
-        //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-        var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
-    }
-    
-    function map_click(map) {
-        map.addEventListener("click",function(e){
-            $.post("{:url('index/clickAjax')}",{longitude:e.point.lng,latitude:e.point.lat},function (res) {
-                var data = res.data;
-                if (data !== ''){
-                    var point = new BMap.Point(data.longitude,data.latitude);
-                    var marker = new BMap.Marker(point);
-                    var sContent =
-                        '<div class="shopop-title">' +
-                        '<a href="/shop/beijing2/23822.aspx" target="_blank">'+data.name+'</a>' +
-                        '<div class="shop-level">' +
-                        '<span title="门店等级">'+data.grade+'级</span>' +
-                        '<i style="width:'+data.grade*20+'%"></i>' +
-                        '</div>' +
-                        '<span class="i-shop shop-xiu"></span>' +
-                        '</div>'+
-                        '<div class="shopop-content">' +
-                        '<div class="clearfix">' +
-                        '<a target="_blank" class="img" href="#">' +
-                        '<img src="'+data.pics+'" style="width: 100%;">' +
-                        '</a>' +
-                        '<div class="info">' +
-                        '<p><span>营业时间：</span>08:00-18:00</p>' +
-                        '<p><span>支付方式：<i class="i-alipay i-shop">支付宝</i></span></p>' +
-                        '<p><span>服务支持：<i class="i-shop i-zs">途虎直送</i></span></p>' +
-                        '<p><span>门店地址：</span><span class="address">'+data.address+'</span></p>' +
-                        '<div class="btn">' +
-                        '<a href="#">在线咨询</a>' +
-                        '<a href="#">线下体验</a>' +
-                        '</div>' +
-                        '</div></div></div>'
-                        ;
+        $.each(data ,function (i,itemlist) {
+            $.each(itemlist,function (k,item) {
+                var pt = new BMap.Point(item['longitude'], item['latitude']);
+                var marker = new BMap.Marker(pt);
+                marker.addEventListener("click", function (e) {
+                    $.post("{:url('index/clickAjax')}", {
+                        id:item['id']
+                    }, function (res) {
+                        var data = res.data;
+                        if (data !== '') {
+                            var point = new BMap.Point(data.longitude, data.latitude);
+                            var marker = new BMap.Marker(point);
+                            var sContent =
+                                '<div class="shopop-title">' +
+                                '<a href="/shop/beijing2/23822.aspx" target="_blank">' + data.name + '</a>' +
+                                '<div class="shop-level">' +
+                                '<span title="门店等级">' + data.grade + '级</span>' +
+                                '<i style="width:' + data.grade * 20 + '%"></i>' +
+                                '</div>' +
+                                '<span class="i-shop shop-xiu"></span>' +
+                                '</div>' +
+                                '<div class="shopop-content">' +
+                                '<div class="clearfix">' +
+                                '<a target="_blank" class="img" href="#">' +
+                                '<img src="' + data.pics + '" style="width: 100%;">' +
+                                '</a>' +
+                                '<div class="info">' +
+                                '<p><span>营业时间：</span>08:00-18:00</p>' +
+                                '<p><span>支付方式：<i class="i-alipay i-shop">支付宝</i></span></p>' +
+                                '<p><span>服务支持：<i class="i-shop i-zs">途虎直送</i></span></p>' +
+                                '<p><span>门店地址：</span><span class="address">' + data.address + '</span></p>' +
+                                '<div class="btn">' +
+                                '<a href="#">在线咨询</a>' +
+                                '<a href="#">线下体验</a>' +
+                                '</div>' +
+                                '</div></div></div>'
+                            ;
 
-                    var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
-                    map.centerAndZoom(point);
-                    map.addOverlay(marker);
-                    marker.openInfoWindow(infoWindow);
-                }
+                            var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+                            map.centerAndZoom(point);
+                            map.addOverlay(marker);
+                            marker.openInfoWindow(infoWindow);
+                        }
+                    })
+                });
+                markers.push(marker);
             })
-        });
+        })
+        //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+        var markersCount = new BMapLib.MarkerClusterer(map, {markers:markers});
+        markersCount.setMinClusterSize = 5;
     }
 
     function maps() {
         // 百度地图API功能
         var map = new BMap.Map("container");
+        console.log('{$field_county.longitude}')
         var point = new BMap.Point("{$field_county.longitude}", "{$field_county.latitude}");
         map.centerAndZoom(point, 10);
         map.enableScrollWheelZoom(true);
-
-        map_click(map);
-
+        // searchBymPoint()
         $.post("{:url('index/chartAjax')}",{city:"{$field_county.id}",type:"{$field_county.type}"},function (res) {
             var mark_data = res.data;
             markers(map,mark_data);
         });
     }
     maps();
+
+    // function searchBymPoint(map){
+    //     var myValue = $('#suggestId').val();
+    //     function myFun() {
+    //         var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+    //         map.centerAndZoom(pp, 18);
+    //         map.addOverlay(new BMap.Marker(pp)); //添加标注
+    //     }
+    //     function setPlace() {
+    //         map.clearOverlays(); //清除地图上所有覆盖物
+    //         local = new BMap.LocalSearch(map, { //智能搜索
+    //             onSearchComplete: myFun
+    //         });
+    //         local.search(myValue);
+    //     }
+    //     setPlace();
+    // }
 
 </script>
 </body>

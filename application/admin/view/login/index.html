@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+    <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
+</head>
+<body>
+<div style="width: 375px;margin: 110px auto;">
+    <h2 style="margin-bottom: 10px;font-weight: 300;font-size: 30px;color: #000;text-align: center">管理系统登录</h2>
+    <div class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" style="width: 100%;" lay-submit lay-filter="login">登录</button>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form','jquery'], function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        //监听提交
+        form.on('submit(login)', function(data){
+            $.post("{:url('api/ActionApi/login_action')}",data.field,function (res) {
+                if (res.code == 200){
+                    layer.alert(res.msg,{
+                        closeBtn:0,
+                        anim:1,
+                        icon:6,
+                        yes:function () {
+                            window.location.href = "{:url('index/index')}";
+                        }
+                    })
+                }else{
+                    var index = layer.alert(res.msg,{
+                        closeBtn:0,
+                        anim:1,
+                        icon:5,
+                        yes:function () {
+                            $('input[name=password]').val('')
+                            layer.close(index)
+                        }
+                    })
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

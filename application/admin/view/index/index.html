@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+    <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="table_list" lay-filter="table_list"></table>
+    </div>
+</div>
+<script type="text/html" id="picsTpl">
+    <img src="{{d.pics}}" alt="{{d.name}}" style="width: 100px;height: 100px;">
+</script>
+<script type="text/html" id="toolbarTop">
+    <a class="layui-btn layui-btn-xs" id="add">添加</a>
+    <a class="layui-btn layui-btn-xs" id="layout">退出</a>
+</script>
+<script type="text/html" id="barRight">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    layui.use(['table','rate'], function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        //第一个实例
+        table.render({
+            elem: '#table_list'
+            ,toolbar: '#toolbarTop'
+            ,height: 'auto'
+            ,url: '{:url("api/ActionApi/table_action")}' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID', width:60, sort: true, fixed: 'left'}
+                ,{field: 'name', title: '门店名称',width:300}
+                ,{field: 'pics', title: '门店图片',width:100,templet: '#picsTpl'}
+                ,{field: 'address', title: '门店地址'}
+                ,{field: 'cityname', title: '城市',width:100}
+                ,{field: 'countyname', title: '区域',width:100}
+                ,{field: 'install_amount', title: '销量', width:80}
+                ,{field: 'grade', title: '星级', width: 60}
+                ,{field: 'longitude', title: '经度', width: 80}
+                ,{field: 'latitude', title: '纬度', width: 80}
+                ,{field: 'right', width: 115, toolbar:'#barRight'}
+            ]]
+        });
+
+        table.on('tool(table_list)',function (obj) {
+            var layEvent = obj.event;
+            var data = obj.data;
+            switch (layEvent) {
+                case 'edit':
+                    iframe_open(data.name,"{:url('index/edit')}?id="+data.id);
+                    break;
+                case 'del':
+                    layer.confirm('您确定要删除'+data.name+'吗？',function () {
+                        $.post("{:url('api/ActionApi/table_del')}",{id:data.id},function (res) {
+                            if (res.code == 200){
+                                layer.alert(res.msg,{
+                                    closeBtn:0,
+                                    anim:1,
+                                    icon:6,
+                                    yes:function () {
+                                        window.location.href = "{:url('index/index')}";
+                                    }
+                                })
+                            }else{
+                                layer.alert(res.msg,{
+                                    closeBtn:0,
+                                    anim:1,
+                                    icon:5
+                                })
+                            }
+                        });
+                    });
+                    break;
+            }
+        });
+        $('#add').click(function () {
+            iframe_open('添加',"{:url('index/add')}");
+        });
+        $('#layout').click(function () {
+            $.get('{:url("index/lagout")}',function () {
+                layer.alert('退出成功',{
+                    closeBtn:0,
+                    anim:1,
+                    icon:6,
+                    yes:function () {
+                        window.location.href = "{:url('index/index')}";
+                    }
+                })
+            });
+        });
+        function iframe_open(title,content,w="90%",h="90%") {
+            layer.open({
+                type: 2,
+                title: title,
+                shadeClose: false,
+                shade: 0.8,
+                maxmin: false, //开启最大化最小化按钮
+                area: [w, h],
+                content: content
+            });
+        }
+    });
+</script>
+</body>
+</html>

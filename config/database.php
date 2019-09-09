@@ -60,4 +60,6 @@ return [
     'break_reconnect' => false,
     // 断线标识字符串
     'break_match_str' => [],
+    //数据库验证密钥
+    'auto_code'       => 'BbDzcXE0KRxfO86cpy3B8Tvji0UkpEiH',
 ];

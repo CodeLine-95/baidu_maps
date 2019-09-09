@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加</title>
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+    <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-card-header">
+    <h2 style="margin-bottom: 10px;font-weight: 300;font-size: 30px;color: #000;text-align: center">添加</h2>
+</div>
+<div class="layui-form layui-form-pane" style="margin: 10px;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required lay-verify="required" placeholder="请输入门店名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店图片</label>
+        <div class="layui-input-block">
+            <input type="text" name="pics" required lay-verify="required" placeholder="请输入门店图片" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" required lay-verify="required" placeholder="请输入门店地址" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付途径</label>
+        <div class="layui-input-block">
+            <select name="pay_type" lay-verify="required">
+                <option value="0">全部</option>
+                <option value="1">支付宝</option>
+                <option value="2">银行卡</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">城市</label>
+        <div class="layui-input-block">
+            <select name="type" lay-verify="required">
+                {foreach $type as $t}
+                <option value="{$t.id}">{$t.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">城市</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required" lay-filter="city" id="city">
+                {foreach $citys as $c}
+                <option value="{$c.id}">{$c.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-block">
+            <select name="county" lay-verify="required" lay-filter="county"id="countyText">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">销量</label>
+        <div class="layui-input-block">
+            <input type="text" name="install_amount" required lay-verify="required" placeholder="请输入销量" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">星级</label>
+        <div class="layui-input-block">
+            <input type="text" name="grade" required lay-verify="required" placeholder="请输入星级" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">经度</label>
+        <div class="layui-input-block">
+            <input type="text" name="longitude" required lay-verify="required" placeholder="请输入星级" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">纬度</label>
+        <div class="layui-input-block">
+            <input type="text" name="latitude" required lay-verify="required" placeholder="请输入星级" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="add">添加</button>
+        </div>
+    </div>
+</div>
+<script>
+    //Demo
+    layui.use(['form'], function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        //监听提交
+        form.on('submit(add)', function(data){
+            $.post('{:url("index/add")}',data.field,function (res) {
+                if (res.code == 200){
+                    layer.alert(res.msg,{
+                        closeBtn:0,
+                        anim:1,
+                        icon:6,
+                        yes:function () {
+                            window.parent.location.reload();
+                            // window.location.href = "{:url('index/index')}";
+                        }
+                    })
+                }else{
+                    layer.alert(res.msg,{
+                        closeBtn:0,
+                        anim:1,
+                        icon:5
+                    })
+                }
+            });
+            return false;
+        });
+
+        form.on('select(city)',function (data) {
+            $.get('{:url("api/action_api/county")}',{cityid:data.value},function (res) {
+                var data = res.data;
+                var countyStr = '';
+                $.each(data,function (index,item) {
+                    countyStr += '<option value="'+item.id+'">'+item.name+'</option>';
+                });
+                $('#countyText').html(countyStr);
+                form.render('select')
+            })
+        })
+    });
+</script>
+</body>
+</html>

@@ -9,6 +9,9 @@ class Index extends Controller
     public function index(){
         //选中城市
         $cityid = input('cityid');
+        if(!$cityid){
+            $cityid = 2;
+        }
         $citys_table = 'citys';
         $field_county = $this->selectOne($citys_table,['id'=>$cityid]);
         if ($field_county['type'] == 2){
@@ -68,7 +71,11 @@ class Index extends Controller
             }
             $chart_list = $this->selectAll('chart_list',$data);
             if ($chart_list){
-                return json(['data'=>$chart_list,'code'=>200]);
+                $chart_list_all = [];
+                foreach ($chart_list as $c){
+                    $chart_list_all[$c['county']][] = $c;
+                }
+                return json(['data'=>$chart_list_all,'code'=>200]);
             }else{
                 return json(['data'=>[],'code'=>200]);
             }
@@ -77,11 +84,26 @@ class Index extends Controller
         }
     }
 
+//    public function clickAjax(){
+//        if (request()->isAjax()){
+//            $params = request()->post();
+//            $data['longitude'] = number_format($params['longitude'],2,'.','');
+//            $data['latitude'] = number_format($params['latitude'],2,'.','');
+//            $field = $this->selectOne('chart_list',$data);
+//            if ($field){
+//                return json(['data'=>$field,'code'=>200]);
+//            }else{
+//                return json(['data'=>'','code'=>200]);
+//            }
+//        }else{
+//            return json(['msg'=>'请求异常错误','code'=>400]);
+//        }
+//    }
+
     public function clickAjax(){
         if (request()->isAjax()){
             $params = request()->post();
-            $data['longitude'] = number_format($params['longitude'],2,'.','');
-            $data['latitude'] = number_format($params['latitude'],2,'.','');
+            $data['id'] = $params['id'];
             $field = $this->selectOne('chart_list',$data);
             if ($field){
                 return json(['data'=>$field,'code'=>200]);

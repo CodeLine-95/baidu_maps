@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$field.name}</title>
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+    <script type="text/javascript" src="/static/admin/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-card-header">
+    <h2 style="margin-bottom: 10px;font-weight: 300;font-size: 30px;color: #000;text-align: center">「{$field.name}」编辑</h2>
+</div>
+<div class="layui-form layui-form-pane" style="margin: 10px;">
+    <input type="hidden" name="id" value="{$field.id}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required value="{$field.name}" lay-verify="required" placeholder="请输入门店名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店图片</label>
+        <div class="layui-input-block">
+            <input type="text" name="pics" required value="{$field.pics}" lay-verify="required" placeholder="请输入门店图片" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" required value="{$field.address}" lay-verify="required" placeholder="请输入门店地址" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付途径</label>
+        <div class="layui-input-block">
+            <select name="pay_type" lay-verify="required">
+                <option value="0" {if condition="$field.pay_type == 0"}selected{/if}>全部</option>
+                <option value="1" {if condition="$field.pay_type == 1"}selected{/if}>支付宝</option>
+                <option value="2" {if condition="$field.pay_type == 2"}selected{/if}>银行卡</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">城市</label>
+        <div class="layui-input-block">
+            <select name="type" lay-verify="required">
+                {foreach $type as $t}
+                <option value="{$t.id}" {if condition="$field.type == $t.id"}selected{/if}>{$t.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">城市</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required" lay-filter="city" id="city">
+                {foreach $citys as $c}
+                <option value="{$c.id}" {if condition="$field.city == $c.id"}selected{/if}>{$c.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" id="county" value="{$field.county}">
+        <label class="layui-form-label">区域</label>
+        <div class="layui-input-block">
+            <select name="county" lay-verify="required" lay-filter="county"id="countyText">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">销量</label>
+        <div class="layui-input-block">
+            <input type="text" name="install_amount" required value="{$field.install_amount}" lay-verify="required" placeholder="请输入销量" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">星级</label>
+        <div class="layui-input-block">
+            <input type="text" name="grade" required value="{$field.grade}" lay-verify="required" placeholder="请输入星级" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">经度</label>
+        <div class="layui-input-block">
+            <input type="text" name="longitude" required value="{$field.longitude}" lay-verify="required" placeholder="请输入星级" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">纬度</label>
+        <div class="layui-input-block">
+            <input type="text" name="latitude" required value="{$field.latitude}" lay-verify="required" placeholder="请输入星级" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="edit">修改</button>
+        </div>
+    </div>
+</div>
+<script>
+    //Demo
+    layui.use(['form'], function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        var cityid = $('#city option:selected').val();
+        $.get('{:url("api/action_api/county")}',{cityid:cityid},function (res) {
+            var data = res.data;
+            var countyStr = '';
+            var countyid = $('#county').val();
+            $.each(data,function (index,item) {
+                if (item.id == countyid){
+                    var selected = 'selected';
+                }else{
+                    var selected = '';
+                }
+                countyStr += '<option value="'+item.id+'" '+selected+'>'+item.name+'</option>';
+            })
+            $('#countyText').html(countyStr);
+            form.render('select')
+        })
+        //监听提交
+        form.on('submit(edit)', function(data){
+            $.post('{:url("index/edit")}',data.field,function (res) {
+                if (res.code == 200){
+                    layer.alert(res.msg,{
+                        closeBtn:0,
+                        anim:1,
+                        icon:6,
+                        yes:function () {
+                            window.parent.location.reload();
+                            // window.location.href = "{:url('index/index')}";
+                        }
+                    })
+                }else{
+                    layer.alert(res.msg,{
+                        closeBtn:0,
+                        anim:1,
+                        icon:5
+                    })
+                }
+            });
+            return false;
+        });
+
+        form.on('select(city)',function (data) {
+            $.get('{:url("api/action_api/county")}',{cityid:data.value},function (res) {
+                var data = res.data;
+                var countyStr = '';
+                $.each(data,function (index,item) {
+                    countyStr += '<option value="'+item.id+'">'+item.name+'</option>';
+                })
+                console.log(countyStr)
+                $('#countyText').html(countyStr);
+                form.render('select')
+            })
+        })
+    });
+</script>
+</body>
+</html>
